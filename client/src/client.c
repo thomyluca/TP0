@@ -52,7 +52,7 @@ int main(void)
 
 	// Enviamos al servidor el valor de CLAVE como mensaje
 
-	enviar_mensaje("CLAVE", conexion);
+	enviar_mensaje(valor, conexion);
 
 	// Armamos y enviamos el paquete
 	paquete(conexion);
@@ -98,39 +98,48 @@ void leer_consola(t_log* logger)
 
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
 
-    while (strlen(leido) > 0)
+    for (; *leido != '\0';)
     {
+        //Primero, logeame lo leido
         log_info(logger, leido);
+
+        //ahora que ya usamos el string, liberamelo con free
         free(leido);
-        leido = readline("> ");
+
+        //volvemos a poner el readline para poder seguir loggeando.
+        leido = readline(">");
     }
 
+    
+	
 	// ¡No te olvides de liberar las lineas antes de regresar!
-    // Las liberamos en el while
+	free(leido);
 }
 
 void paquete(int conexion)
 {
-	// Ahora toca lo divertido!
-	char* leido;
-	t_paquete* paquete;
+    //Ahora toca lo divertido!
+    t_paquete* paquete = crear_paquete();
 
-	// Leemos y esta vez agregamos las lineas al paquete
+    //De nuevo vas a tener que usar readline hasta que te llegue un nulo igual que antes, solo que ahora en lugar de logear, vas a agregar esa cadena al paquete!
+    //Recomiendo revisar bien el enunciado del TP ya que ahi está explicado con detalles
+    char* leido = readline("> ");
 
-    paquete = crear_paquete();
-	
-    leido = readline("> ");
-    while (strlen(leido) > 0)
+    for (; *leido != '\0';)
     {
-        agregar_a_paquete(paquete, leido, strlen(leido));
-        free(leido);
-        leido = readline("> ");
-    }
-	
-    // ¡No te olvides de liberar las líneas y el paquete antes de regresar!
-    // Las liberamos en el while
+        agregar_a_paquete(paquete, leido, strlen(leido) + 1);
 
-	eliminar_paquete(paquete);
+        free(leido);
+
+        leido = readline("");
+    }
+
+    //Una vez hayamos terminado de ingresar valores, toca enviarlo
+    enviar_paquete(paquete, conexion);
+
+    //Y no nos olvidemos de borrar el paquete con eliminar_paquete
+    eliminar_paquete(paquete);
+    free(leido);
 	
 }
 

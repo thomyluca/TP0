@@ -31,6 +31,7 @@ int iniciar_servidor(void)
 	listen(socket_servidor, SOMAXCONN);
 
 	freeaddrinfo(servinfo);
+
 	log_trace(logger, "Listo para escuchar a mi cliente");
 
 	return socket_servidor;
@@ -41,8 +42,11 @@ int esperar_cliente(int socket_servidor)
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
 	//assert(!"no implementado!");
 
+	struct sockaddr_in dir_cliente;
+	unsigned tam_direction = sizeof(struct sockaddr_in);
+
 	// Aceptamos un nuevo cliente
-	int socket_cliente = accept(socket_servidor, NULL, NULL);
+	int socket_cliente = accept(socket_servidor, (struct sockaddr*) &dir_cliente, &tam_direccion);
 	log_info(logger, "Se conecto un cliente!");
 
 	return socket_cliente;

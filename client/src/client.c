@@ -100,7 +100,7 @@ void leer_consola(t_log* logger)
 
 	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
 
-    for (; *leido != '\0';)
+    while(strcmp(leido, ""))
     {
         //Primero, logeame lo leido
         log_info(logger, leido);
@@ -127,7 +127,7 @@ void paquete(int conexion)
     //Recomiendo revisar bien el enunciado del TP ya que ahi está explicado con detalles
     char* leido = readline("> ");
 
-    for (; *leido != '\0';)
+    while(strcmp(leido, ""))
     {
         agregar_a_paquete(paquete, leido, strlen(leido) + 1);
 

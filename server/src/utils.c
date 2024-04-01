@@ -46,7 +46,7 @@ int esperar_cliente(int socket_servidor)
 	unsigned tam_direction = sizeof(struct sockaddr_in);
 
 	// Aceptamos un nuevo cliente
-	int socket_cliente = accept(socket_servidor, (struct sockaddr*) &dir_cliente, &tam_direccion);
+	int socket_cliente = accept(socket_servidor, (struct sockaddr*) &dir_cliente, &tam_direction);
 	log_info(logger, "Se conecto un cliente!");
 
 	return socket_cliente;

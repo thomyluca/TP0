@@ -9,7 +9,7 @@ int iniciar_servidor(void)
 
 	int socket_servidor;
 
-	struct addrinfo hints, *servinfo, *p;
+	struct addrinfo hints, *servinfo;
 
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
@@ -42,11 +42,8 @@ int esperar_cliente(int socket_servidor)
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
 	//assert(!"no implementado!");
 
-	struct sockaddr_in dir_cliente;
-	unsigned tam_direction = sizeof(struct sockaddr_in);
-
 	// Aceptamos un nuevo cliente
-	int socket_cliente = accept(socket_servidor, (struct sockaddr*) &dir_cliente, &tam_direccion);
+	int socket_cliente = accept(socket_servidor, NULL, NULL);
 	log_info(logger, "Se conecto un cliente!");
 
 	return socket_cliente;

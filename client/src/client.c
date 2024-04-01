@@ -101,7 +101,7 @@ void leer_consola(t_log* logger)
     for (; *leido != '\0';)
     {
         //Primero, logeame lo leido
-        log_info(logger, leido);
+        log_info(logger, "Se ingreso  %s",leido);
 
         //ahora que ya usamos el string, liberamelo con free
         free(leido);
